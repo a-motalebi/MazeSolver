@@ -33,25 +33,20 @@ void Maze::randStart()
 }
 void Maze::walk()
 {
-    // std::cout << "WALK\n";
     // printMaze();
     Cell* nextCell = nextStep();
-    // std::cout << nextCell->getIndex() << std::endl;
     // Build path between the curCell and nextCell if nextCell is not null
-    if (nextCell != nullptr) {
-        // std::cout << "FIRST mode\n";
+    if (nextCell) {
+        std::cout << nextCell->getIndex() << std::endl;
         curCell->updatePaths(nextCell);
-        // curCell->setVisited();
         curCell = nextCell;
         curCell->setVisited();
         VisCells++;
         visCells.push_back(curCell->getIndex());
         walk();
-        // std::cout << "FIRST mode2\n";
     } else {
-        // std::cout << "hunt mode\n";
-        // Enter Hunt Mode
-        // Find a random previously visited Cell, make it the current Cell, & start a new path from it
+        // Enter Hunting Mode
+        // Find the first unvisited Cell that has visited neighbor, make it the current Cell, & start a new path from it
         if (VisCells < totalCells && !visCells.empty()) {
             for (auto& i : grid) {
                 if (!i.isVisited()) {
@@ -85,24 +80,18 @@ void Maze::walk()
                     }
                 }
             }
-            // std::random_shuffle(visCells.begin(), visCells.end());
-            // int index = visCells.back();
-            // curCell = &grid[index];
-            // visCells.pop_back();
-            // VisCells--;
-            // walk();
         } else {
             // if all Cells have been visited then the maze is complete - print it!
             printMaze();
         }
     }
 }
-// Finds a random unvisited neighbor square and returns it. Returns a nullptr if all neighbors have been visited
+// Finds a random unvisited neighbor cell and returns it. Returns a nullptr if all neighbors have been visited
 Cell* Maze::nextStep()
 {
     std::vector<Cell*> notVisited;
-    int x = curCell->getX();
-    int y = curCell->getY();
+    int x { static_cast<int>(curCell->getX()) };
+    int y { static_cast<int>(curCell->getY()) };
     size_t index[4] = { getIndex(x, y - 1), getIndex(x, y + 1), getIndex(x - 1, y), getIndex(x + 1, y) };
     if (y - 1 >= 0 && !grid[index[0]].isVisited())
         notVisited.push_back(&grid[index[0]]);

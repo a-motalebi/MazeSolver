@@ -19,7 +19,7 @@ void Cell::updatePaths(Cell* next)
     } else if (next->x < x) { // moved left
         neighbors[L] = next;
         next->neighbors[R] = this;
-    } else if (next->x > x) { // moved right
+    } else { // moved right
         neighbors[R] = next;
         next->neighbors[L] = this;
     }

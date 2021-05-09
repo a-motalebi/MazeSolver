@@ -21,7 +21,7 @@ public:
     Cell* nextStep();
     void walk();
     // Calculates and returns the vector index for a set of x,y coordinates
-    size_t getIndex(size_t x, size_t y) const { return y * h + x; };
+    size_t getIndex(size_t x, size_t y) const { return y * w + x; };
     void printMaze();
 };
 
