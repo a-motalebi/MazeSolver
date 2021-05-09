@@ -1,0 +1,8 @@
+{
+    "makefile.extensionOutputFolder": "./.vscode",
+    "files.associations": {
+        "chrono": "cpp"
+    }
+    "editor.formatOnSave": true,
+    "clang-format.executable": "C:/Program Files/LLVM/bin/clang-format"
+}
