@@ -22,6 +22,7 @@ void Maze::generateGrid()
         }
     }
     player_plc = &grid[0];
+    goal_plc = &grid[totalCells - 1];
 }
 // selects random starting point
 void Maze::randStart()
@@ -33,11 +34,10 @@ void Maze::randStart()
 }
 void Maze::walk()
 {
-    // printMaze();
+    // printMaze();// show steps
     Cell* nextCell = nextStep();
     // Build path between the curCell and nextCell if nextCell is not null
     if (nextCell) {
-        std::cout << nextCell->getIndex() << std::endl;
         curCell->updatePaths(nextCell);
         curCell = nextCell;
         curCell->setVisited();
@@ -82,7 +82,7 @@ void Maze::walk()
             }
         } else {
             // if all Cells have been visited then the maze is complete - print it!
-            printMaze();
+            //printMaze();
         }
     }
 }
@@ -111,6 +111,12 @@ void Maze::printMaze()
     size_t i {};
     for (size_t y {}; y <= h; y++) {
         for (size_t x {}; x < w; x++) {
+            if (x == w - 1 && y == h) {
+                std::cout << print_as_color<ansi_color_code::green>("유");
+                std::cout << print_as_color<ansi_color_code::blue>("▄ ");
+                i++;
+                break;
+            }
             if (x == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("  ▄ ");
             if (y == 0)
@@ -145,5 +151,48 @@ void Maze::printMaze()
             }
         }
         std::cout << std::endl;
+    }
+}
+void Maze::gameMode()
+{
+    char c {};
+    //gaming mode while
+    while (c != 'e' && c != 'E') {
+        std::cout << "\033[2J\033[1;1H"; //it clears the screen
+        std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
+        std::cout << print_as_color<ansi_color_code::blue>("You are the red one. Let's go find your friend!") << std::endl;
+        std::cout << print_as_color<ansi_color_code::blue>("Please use \"w a s d\" to move. Or \"e\" to exit.") << std::endl;
+        printMaze();
+        std::cin >> c;
+        switch (c) {
+        case 'w':
+        case 'W':
+            if (player_plc->neighbors[Cell::U])
+                player_plc = player_plc->neighbors[Cell::U];
+            break;
+        case 'a':
+        case 'A':
+            if (player_plc->neighbors[Cell::L])
+                player_plc = player_plc->neighbors[Cell::L];
+            break;
+        case 'd':
+        case 'D':
+            if (player_plc->neighbors[Cell::R])
+                player_plc = player_plc->neighbors[Cell::R];
+            break;
+        case 's':
+        case 'S':
+            if (player_plc->neighbors[Cell::D])
+                player_plc = player_plc->neighbors[Cell::D];
+            break;
+        default:
+            break;
+        }
+        if (player_plc == goal_plc) {
+            std::cout << "\033[2J\033[1;1H"; //it clears the screen
+            std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
+            std::cout << print_as_color<ansi_color_code::blue>("Congratulations, You won the hardest game I've ever code! ") << std::endl;
+            break;
+        }
     }
 }
