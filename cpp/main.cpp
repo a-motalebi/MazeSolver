@@ -21,6 +21,8 @@ int main(int agrc, char** argv)
     std::cin >> h;
     Maze m(w, h);
     m.printMaze();
-    m.gameMode();
+    std::cout << std::endl;
+    // m.graph.show();
+    // m.gameMode();
     return 0;
 }

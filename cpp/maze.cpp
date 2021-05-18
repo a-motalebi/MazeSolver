@@ -1,6 +1,8 @@
 #include "maze.h"
 #include "ansi.h"
 #include <algorithm>
+#include <memory>
+
 Maze::Maze(size_t w, size_t h)
     : w { w }
     , h { h }
@@ -10,6 +12,9 @@ Maze::Maze(size_t w, size_t h)
     generateGrid();
     randStart();
     walk();
+    for (size_t i {}; i < totalCells; i++)
+        notInserted.push_back(i);
+    setGraph();
 }
 
 void Maze::generateGrid()
@@ -195,4 +200,38 @@ void Maze::gameMode()
             break;
         }
     }
+}
+void Maze::setGraph()
+{
+    Graph::Node* root { new Graph::Node(0) };
+    graph.Nodes.push_back(root);
+    graph.N++;
+    curNode = root;
+    insert(0);
+}
+void Maze::insert(size_t n)
+{
+    for (auto& j : graph.Nodes)
+        if (j->value == n)
+            curNode = j;
+    for (auto& i : grid[n].neighbors) {
+        if (i) {
+            if (std::binary_search(notInserted.begin(), notInserted.end(), i->getIndex())) {
+                graph.Nodes.push_back(new Graph::Node(i->getIndex(), curNode));
+                graph.N++;
+            }
+        }
+    }
+    notInserted.erase(std::remove(notInserted.begin(), notInserted.end(), n), notInserted.end());
+    size_t flag {};
+    for (auto& j : graph.Nodes) {
+        if (j->value == n) {
+            curNode = j;
+            flag = 1;
+        }
+    }
+    if (!flag)
+        return;
+    for (auto& i : curNode->children)
+        insert(i->value);
 }

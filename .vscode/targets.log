@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 11 11:26:03 2021
+# Make data base, printed on Tue May 18 17:55:15 2021
 
 # Variables
 
@@ -23,7 +23,7 @@ USERPROFILE = C:\Users\ali
 # environment
 LOCALAPPDATA = C:\Users\ali\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c5aed4b9-77af-47c4-858d-3905bf2de8ad-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e6bef63b-f69a-4501-a81f-5fa618fce07a-sock
 # environment
 VSCODE_CWD = C:\Users\ali\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -41,7 +41,7 @@ NO_XILINX_DATA_LICENSE = HIDDEN
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_29876_WKFOZWMXDBKPTKWI
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10644_OMAUXEFDRNILQVZD
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -95,7 +95,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 29876
+VSCODE_PID = 10644
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -159,7 +159,7 @@ PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # makefile (from 'Makefile', line 4)
-OBJECTS = ./obj/main.o ./obj/ansi.o ./obj/cell.o ./obj/maze.o
+OBJECTS = ./obj/main.o ./obj/ansi.o ./obj/cell.o ./obj/maze.o ./obj/graph.o
 # environment
 USERDOMAIN = LAPTOP-KOS7S7GE
 # 'override' directive
@@ -176,12 +176,13 @@ PROGRAMFILES(X86) = C:\Program Files (x86)
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-KOS7S7GE
 # environment
 NUMBER_OF_PROCESSORS = 12
-# environment
+# envi 
+ronment
 PUBLIC = C:\Users\Public
 # environment
 ASL.LOG = Destination=file
 # environment
-VSCODE_NODE_CACHED_DATA_DIR = C:\Users\ali\AppData\Roaming\Code\CachedData\cfa2e218100323074ac1948c885448fdf4de2a7f
+VSCODE_NODE_CACHED_DATA_DIR = C:\Users\ali\AppData\Roaming\Code\CachedData\054a9295330880ed74ceaedda236253b4f39a335
 # environment
 APPDATA = C:\Users\ali\AppData\Roaming
 # environment
@@ -193,12 +194,11 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProce
 # environment
 COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
 # environment
-ELECTRON_R 
-UN_AS_NODE = 1
+ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\ali\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\aba86242eac60af83d3ca9763c3cda19-1.56.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\aba86242eac60af83d3ca9763c3cda19-1.56.2-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -249,16 +249,22 @@ cpp/main.cpp:
 #  File has not been updated.
 
 # Not a target:
+h/graph.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 cpp/maze.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-obj/main.o: cpp/main.cpp h/ansi.h h/cell.h h/maze.h
+obj/main.o: cpp/main.cpp h/ansi.h h/cell.h h/maze.h h/graph.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 18):
+#  recipe to execute (from 'Makefile', line 20):
 	$(CXX) $(CXXFLAGS) ./cpp/main.cpp -o ./obj/main.o
 
 # Not a target:
@@ -270,7 +276,7 @@ cpp/ansi.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-05-07 06:25:21
+#  Last modified 2021-05-11 12:29:01
 #  File has been updated.
 #  Successfully updated.
 
@@ -291,8 +297,15 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 20):
+#  recipe to execute (from 'Makefile', line 22):
 	rm -fv $(TARGET) $(OBJECTS)
+
+obj/graph.o: cpp/graph.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 16):
+	$(CXX) $(CXXFLAGS) ./cpp/graph.cpp -o ./obj/graph.o
 
 obj/cell.o: cpp/cell.cpp
 #  Implicit rule search has not been done.
@@ -314,7 +327,7 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
-main: obj/main.o obj/ansi.o obj/cell.o obj/maze.o
+main: obj/main.o obj/ansi.o obj/cell.o obj/maze.o obj/graph.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -331,13 +344,20 @@ h/maze.h:
 h/ansi.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+#  File has not been upd 
+ated.
+
+# Not a target:
+cpp/graph.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 obj/ansi.o: cpp/ansi.cpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 16):
+#  recipe to execute (from 'Makefile', line 18):
 	$(CXX) $(CXXFLAGS) ./cpp/ansi.cpp -o ./obj/ansi.o
 
 # Not a target:
@@ -347,19 +367,19 @@ h/cell.h:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=17/1024=2%, Rehash=0, Collisions=0/43=0%
+# Load=20/1024=2%, Rehash=0, Collisions=0/50=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 201 B / avg = 8 B
-# current buf: size = 8174 B / used = 201 B / count = 24 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 27 / storage = 237 B / avg = 8 B
+# current buf: size = 8174 B / used = 237 B / count = 27 / avg = 8 B
 
-# strcache performance: lookups = 39 / hit rate = 38%
+# strcache performance: lookups = 44 / hit rate = 38%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Tue May 11 11:26:03 2021
+# Load=27/8192=0%, Rehash=0, Collisions=0/44=0%
+# Finished Make data base on Tue May 18 17:55:15 2021
 
  

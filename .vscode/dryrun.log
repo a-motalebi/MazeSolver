@@ -2,8 +2,10 @@ make.exe --dry-run --always-make --keep-going --print-directory
 make: Entering directory 'd:/c++ projects/midproject'
 g++ -std=c++20 -Wall -I h -c  ./cpp/main.cpp -o ./obj/main.o
 g++ -std=c++20 -Wall -I h -c  ./cpp/ansi.cpp -o ./obj/ansi.o
+ 
 g++ -std=c++20 -Wall -I h -c  ./cpp/cell.cpp -o ./obj/cell.o
 g++ -std=c++20 -Wall -I h -c  ./cpp/maze.cpp -o ./obj/maze.o
-g++ -std=c++20 -Ih -pthread -o main ./obj/main.o ./obj/ansi.o ./obj/cell.o ./obj/maze.o 
+g++ -std=c++20 -Wall -I h -c  ./cpp/graph.cpp -o ./obj/graph.o
+g++ -std=c++20 -Ih -pthread -o main ./obj/main.o ./obj/ansi.o ./obj/cell.o ./obj/maze.o ./obj/graph.o 
 make: Leaving directory 'd:/c++ projects/midproject'
  
