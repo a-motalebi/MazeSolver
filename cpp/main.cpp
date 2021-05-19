@@ -23,6 +23,12 @@ int main(int agrc, char** argv)
     m.printMaze();
     std::cout << std::endl;
     // m.graph.show();
+    // std::cout << "preorder:\n";
+    // m.graph.preorder(m.graph.root);
+    // std::cout << "postorder:\n";
+    // m.graph.postorder(m.graph.root);
+    // std::cout << "BFS:\n";
+    // m.graph.BFS();
     // m.gameMode();
     return 0;
 }

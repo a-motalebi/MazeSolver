@@ -19,7 +19,7 @@ Maze::Maze(size_t w, size_t h)
 
 void Maze::generateGrid()
 {
-    size_t i = 0;
+    size_t i {};
     for (size_t y {}; y < h; y++) {
         for (size_t x {}; x < w; x++) {
             grid.emplace_back(x, y, i);
@@ -203,10 +203,10 @@ void Maze::gameMode()
 }
 void Maze::setGraph()
 {
-    Graph::Node* root { new Graph::Node(0) };
-    graph.Nodes.push_back(root);
+    graph.root = new Graph::Node(0);
+    graph.Nodes.push_back(graph.root);
     graph.N++;
-    curNode = root;
+    curNode = graph.root;
     insert(0);
 }
 void Maze::insert(size_t n)

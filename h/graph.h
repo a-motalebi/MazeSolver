@@ -28,12 +28,12 @@ public:
         size_t depth {};
     };
     Graph();
-    // Graph(const Graph&);
+    Node* root;
     ~Graph();
-    // Graph& operator=(const Graph&);
-    // Node& operator[](size_t);
     void show() const;
-    // size_t get_length() { return N; };
+    void preorder(Node*);
+    void postorder(Node*);
+    void BFS();
 
 private:
     std::vector<Node*> Nodes {};

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 18 17:55:15 2021
+# Make data base, printed on Wed May 19 15:21:22 2021
 
 # Variables
 
@@ -23,7 +23,7 @@ USERPROFILE = C:\Users\ali
 # environment
 LOCALAPPDATA = C:\Users\ali\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e6bef63b-f69a-4501-a81f-5fa618fce07a-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-d420461a-47bf-4cce-9d7a-bd7bf2ed2b76-sock
 # environment
 VSCODE_CWD = C:\Users\ali\AppData\Local\Programs\Microsoft VS Code
 # environment
@@ -41,7 +41,7 @@ NO_XILINX_DATA_LICENSE = HIDDEN
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10644_OMAUXEFDRNILQVZD
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_1912_GAFHYXMPUDABVOZZ
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -95,7 +95,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 10644
+VSCODE_PID = 1912
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -121,7 +121,8 @@ COMSPEC = C:\Windows\system32\cmd.exe
 # environment
 WINDIR = C:\Windows
 # environment
-ESET_OPTIONS = $(subst ,,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               )
+ESET_OPTIONS = $(subst ,,                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                    )
 # environment
 MAKELEVEL := 0
 # default
@@ -176,8 +177,7 @@ PROGRAMFILES(X86) = C:\Program Files (x86)
 USERDOMAIN_ROAMINGPROFILE = LAPTOP-KOS7S7GE
 # environment
 NUMBER_OF_PROCESSORS = 12
-# envi 
-ronment
+# environment
 PUBLIC = C:\Users\Public
 # environment
 ASL.LOG = Destination=file
@@ -270,7 +270,8 @@ obj/main.o: cpp/main.cpp h/ansi.h h/cell.h h/maze.h h/graph.h
 # Not a target:
 cpp/ansi.cpp:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
+#  Modification time never checked 
+.
 #  File has not been updated.
 
 # Not a target:
@@ -344,8 +345,7 @@ h/maze.h:
 h/ansi.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#  File has not been upd 
-ated.
+#  File has not been updated.
 
 # Not a target:
 cpp/graph.cpp:
@@ -380,6 +380,6 @@ h/cell.h:
 # strcache performance: lookups = 44 / hit rate = 38%
 # hash-table stats:
 # Load=27/8192=0%, Rehash=0, Collisions=0/44=0%
-# Finished Make data base on Tue May 18 17:55:15 2021
+# Finished Make data base on Wed May 19 15:21:22 2021
 
  

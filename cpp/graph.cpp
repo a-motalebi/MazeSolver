@@ -39,3 +39,29 @@ void Graph::show() const
     for (auto& i : Nodes)
         std::cout << *i << std::endl;
 }
+void Graph::preorder(Node* pn)
+{
+    std::cout << *pn << std::endl;
+    if (pn->children.size())
+        for (auto& i : pn->children)
+            preorder(i);
+}
+void Graph::postorder(Node* pn)
+{
+    if (pn->children.size())
+        for (auto& i : pn->children)
+            preorder(i);
+    std::cout << *pn << std::endl;
+}
+void Graph::BFS()
+{
+    size_t i {}, n {};
+    while (n < N) {
+        for (auto& j : Nodes)
+            if (j->get_depth() == i) {
+                std::cout << *j << std::endl;
+                n++;
+            }
+        i++;
+    }
+}
