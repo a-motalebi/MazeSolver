@@ -118,22 +118,34 @@ void Maze::printMaze()
         for (size_t x {}; x < w; x++) {
             if (x == w - 1 && y == h) {
                 std::cout << print_as_color<ansi_color_code::green>("유");
-                std::cout << print_as_color<ansi_color_code::blue>("▄ ");
+                std::cout << print_as_color<ansi_color_code::blue>("■ ");
                 i++;
                 break;
             }
             if (x == 0)
-                std::cout << print_as_color<ansi_color_code::blue>("  ▄ ");
+                std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
             if (y == 0)
-                std::cout << print_as_color<ansi_color_code::blue>("▄ ▄ ");
+                std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
             else if (grid[i].neighbors[Cell::R] == nullptr && &grid[i] == player_plc) {
                 std::cout << print_as_color<ansi_color_code::red>("웃");
-                std::cout << print_as_color<ansi_color_code::blue>("▄ ");
+                std::cout << print_as_color<ansi_color_code::blue>("■ ");
+            } else if (grid[i].neighbors[Cell::R] == nullptr && grid[i].nodeOfCell->isChecked()) {
+                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                std::cout << print_as_color<ansi_color_code::blue>("■ ");
             } else if (grid[i].neighbors[Cell::R] == nullptr)
-                std::cout << print_as_color<ansi_color_code::blue>("  ▄ ");
-            else if (&grid[i] == player_plc) {
+                std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
+            else if (&grid[i] == player_plc && player_plc->neighbors[Cell::R]->nodeOfCell->isChecked()) {
+                std::cout << print_as_color<ansi_color_code::red>("웃");
+                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+            } else if (&grid[i] == player_plc) {
                 std::cout << print_as_color<ansi_color_code::red>("웃");
                 std::cout << print_as_color<ansi_color_code::blue>("  ");
+            } else if (grid[i].nodeOfCell->isChecked() && grid[i].neighbors[Cell::R]->nodeOfCell->isChecked()) {
+                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+            } else if (grid[i].nodeOfCell->isChecked()) {
+                std::cout << print_as_color<ansi_color_code::yellow>("+   ");
+                // std::cout << print_as_color<ansi_color_code::yellow>("+ ");
             } else
                 std::cout << "    ";
             if (y > 0)
@@ -146,11 +158,15 @@ void Maze::printMaze()
             std::cout << std::endl;
             for (size_t x {}; x < w; x++) {
                 if (x == 0)
-                    std::cout << print_as_color<ansi_color_code::blue>("  ▄ ");
+                    std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
+
                 if (grid[i].neighbors[Cell::D] == nullptr)
-                    std::cout << print_as_color<ansi_color_code::blue>("▄ ▄ ");
-                else
-                    std::cout << print_as_color<ansi_color_code::blue>("  ▄ ");
+                    std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
+                else if (grid[i].neighbors[Cell::D]->nodeOfCell->isChecked() && grid[i].nodeOfCell->isChecked()) {
+                    std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                    std::cout << print_as_color<ansi_color_code::blue>("■ ");
+                } else
+                    std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
                 if (y > 0)
                     i++;
             }
@@ -208,6 +224,9 @@ void Maze::setGraph()
     graph.N++;
     curNode = graph.root;
     insert(0);
+    for (auto& i : graph.Nodes) {
+        grid[i->value].setNode(i);
+    }
 }
 void Maze::insert(size_t n)
 {
@@ -234,4 +253,45 @@ void Maze::insert(size_t n)
         return;
     for (auto& i : curNode->children)
         insert(i->value);
+}
+void Maze::BFS()
+{
+    size_t i {}, n {};
+    while (n < graph.N) {
+        for (auto& j : graph.Nodes)
+            if (j->get_depth() == i) {
+                // std::cout << *j << std::endl;
+                j->setChecked();
+                printMaze();
+                n++;
+            }
+        i++;
+    }
+}
+void Maze::preorder(Graph::Node* pn)
+{
+    pn->setChecked();
+    // std::this_thread::sleep_for(std::chrono::microseconds(10000));
+    // std::cout << "\033[2J\033[1;1H"; //it clears the screen
+    printMaze();
+    // std::cout << *pn << std::endl;
+    if (pn->children.size())
+        for (auto& i : pn->children)
+            preorder(i);
+}
+void Maze::postorder(Graph::Node* pn)
+{
+    // std::this_thread::sleep_for(std::chrono::microseconds(10000));
+    // std::cout << "\033[2J\033[1;1H"; //it clears the screen
+    if (pn->children.size())
+        for (auto& i : pn->children)
+            postorder(i);
+    // std::cout << *pn << std::endl;
+    pn->setChecked();
+    printMaze();
+}
+void Maze::setNodesNotChecked()
+{
+    for (auto& i : graph.Nodes)
+        i->setNotChecked();
 }

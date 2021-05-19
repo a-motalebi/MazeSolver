@@ -1,6 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
-// #include "maze.h"
+
 #include <compare>
 #include <initializer_list>
 #include <iostream>
@@ -19,6 +19,9 @@ public:
         Node();
         explicit Node(double);
         Node(double value, Node* parent);
+        void setChecked() { checked = true; };
+        void setNotChecked() { checked = false; };
+        bool isChecked() { return checked; };
         size_t get_depth() const { return depth; };
         void set_depth(size_t count) { depth = count; };
         std::partial_ordering operator<=>(const Node& n) const { return value <=> n.value; };
@@ -26,14 +29,12 @@ public:
 
     private:
         size_t depth {};
+        bool checked;
     };
     Graph();
     Node* root;
     ~Graph();
     void show() const;
-    void preorder(Node*);
-    void postorder(Node*);
-    void BFS();
 
 private:
     std::vector<Node*> Nodes {};

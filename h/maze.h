@@ -29,6 +29,10 @@ public:
     void gameMode();
     void setGraph();
     void insert(size_t);
+    void BFS();
+    void preorder(Graph::Node*);
+    void postorder(Graph::Node*);
+    void setNodesNotChecked();
 };
 
 #endif
