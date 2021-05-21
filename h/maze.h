@@ -19,6 +19,7 @@ public:
     Graph graph {};
     Cell* player_plc;
     Cell* goal_plc;
+    bool finished { false };
     Maze(size_t w, size_t h);
     void generateGrid();
     void randStart();
@@ -30,8 +31,8 @@ public:
     void setGraph();
     void insert(size_t);
     void BFS();
-    void preorder(Graph::Node*);
-    void postorder(Graph::Node*);
+    void preorder(Graph::Node*, bool finished);
+    // void postorder(Graph::Node*);
     void setNodesNotChecked();
 };
 

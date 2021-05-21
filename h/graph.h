@@ -33,8 +33,10 @@ public:
     };
     Graph();
     Node* root;
+    Node* lastChecked;
     ~Graph();
     void show() const;
+    bool isInTree(Node* n, Node* rt);
 
 private:
     std::vector<Node*> Nodes {};

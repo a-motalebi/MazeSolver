@@ -15,21 +15,20 @@ int main(int agrc, char** argv)
     size_t w {}, h {};
     std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
     std::cout << print_as_color<ansi_color_code::magenta>("\t\t\t\t─▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄\n\t\t\t\t█░░░█░░░░░░░░░░▄▄░██░█\n\t\t\t\t█░▀▀█▀▀░▄▀░▄▀░░▀▀░▄▄░█\n\t\t\t\t█░░░▀░░░▄▄▄▄▄░░██░▀▀░█\n\t\t\t\t─▀▄▄▄▄▄▀─────▀▄▄▄▄▄▄▀\n") << std::endl;
-    std::cout << print_as_color<ansi_color_code::blue>("Please input dimansions:\nwidth:");
+    std::cout << print_as_color<ansi_color_code::blue>("Please enter dimansions:\nwidth:");
     std::cin >> w;
     std::cout << print_as_color<ansi_color_code::blue>("height:");
     std::cin >> h;
     Maze m(w, h);
     m.printMaze();
     std::cout << std::endl;
+
     // m.graph.show();
-    std::cout << "preorder:\n";
-    m.preorder(m.graph.root);
+    m.preorder(m.graph.root, false);
     m.setNodesNotChecked();
-    std::cout << "postorder:\n";
-    m.postorder(m.graph.root);
-    m.setNodesNotChecked();
-    std::cout << "BFS:\n";
+    m.finished = false;
+    // m.postorder(m.graph.root);
+    // m.setNodesNotChecked();
     m.BFS();
     m.setNodesNotChecked();
     // m.printMaze();

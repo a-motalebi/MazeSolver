@@ -39,3 +39,14 @@ void Graph::show() const
     for (auto& i : Nodes)
         std::cout << *i << std::endl;
 }
+bool Graph::isInTree(Node* n, Node* rt)
+{
+    if (!n || !rt)
+        return false;
+    do {
+        if (n->parent == rt || n == rt)
+            return true;
+        n = n->parent;
+    } while (n != nullptr);
+    return false;
+}
