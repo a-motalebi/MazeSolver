@@ -173,7 +173,6 @@ void Maze::printMaze()
             for (size_t x {}; x < w; x++) {
                 if (x == 0)
                     std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
-
                 if (grid[i].neighbors[Cell::D] == nullptr)
                     std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
                 else if (graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::D]->nodeOfCell) && graph.isInTree(graph.lastChecked, grid[i].nodeOfCell)) {
@@ -317,11 +316,12 @@ void Maze::preorder(Graph::Node* pn, bool finished)
     std::cout << print_as_color<ansi_color_code::blue>("DFS(preorder):") << std::endl;
     std::cout << print_as_color<ansi_color_code::red>("+ :Current Path") << std::endl;
     std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Paths") << std::endl;
-
     printMaze();
-    if (pn->children.size())
+    if (pn->children.size()) {
+        std::reverse(pn->children.begin(), pn->children.end());
         for (auto& i : pn->children)
             preorder(i, this->finished);
+    }
 }
 
 void Maze::setNodesNotChecked()

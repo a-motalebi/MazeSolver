@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May 22 16:21:06 2021
+# Make data base, printed on Sat May 22 19:22:52 2021
 
 # Variables
 
@@ -155,7 +155,8 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # automatic
-+F = $(notdir $+)
++F = $(notd 
+ir $+)
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # makefile (from 'Makefile', line 4)
@@ -253,8 +254,7 @@ h/graph.h:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not 
- a target:
+# Not a target:
 cpp/maze.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -276,7 +276,7 @@ cpp/ansi.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-05-11 12:29:01
+#  Last modified 2021-05-22 19:21:01
 #  File has been updated.
 #  Successfully updated.
 
@@ -379,6 +379,6 @@ h/cell.h:
 # strcache performance: lookups = 44 / hit rate = 38%
 # hash-table stats:
 # Load=27/8192=0%, Rehash=0, Collisions=0/44=0%
-# Finished Make data base on Sat May 22 16:21:06 2021
+# Finished Make data base on Sat May 22 19:22:52 2021
 
  
