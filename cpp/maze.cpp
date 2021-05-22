@@ -223,6 +223,11 @@ void Maze::gameMode()
             if (player_plc->neighbors[Cell::D])
                 player_plc = player_plc->neighbors[Cell::D];
             break;
+        case 'e':
+        case 'E':
+            player_plc = &grid[0];
+
+            break;
         default:
             break;
         }
@@ -230,6 +235,7 @@ void Maze::gameMode()
             std::cout << "\033[2J\033[1;1H"; //it clears the screen
             std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
             std::cout << print_as_color<ansi_color_code::blue>("Congratulations, You won the hardest game I've ever code! ") << std::endl;
+            player_plc = &grid[0];
             break;
         }
     }
@@ -278,15 +284,14 @@ void Maze::BFS()
     while (n < graph.N) {
         for (auto& j : graph.Nodes)
             if (j->get_depth() == i) {
-                // std::cout << *j << std::endl;
                 j->setChecked();
                 graph.lastChecked = j;
-                // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                std::this_thread::sleep_for(std::chrono::milliseconds(delay));
                 std::cout << "\033[2J\033[1;1H"; //it clears the screen
                 std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
                 std::cout << print_as_color<ansi_color_code::blue>("BFS:") << std::endl;
                 std::cout << print_as_color<ansi_color_code::red>("+ :Current Path") << std::endl;
-                std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Cells") << std::endl;
+                std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Paths") << std::endl;
                 printMaze();
                 if (j == goal_plc->nodeOfCell) {
                     n = graph.N;
@@ -306,36 +311,50 @@ void Maze::preorder(Graph::Node* pn, bool finished)
     if (pn == goal_plc->nodeOfCell)
         this->finished = true;
 
-    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     std::cout << "\033[2J\033[1;1H"; //it clears the screen
     std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
     std::cout << print_as_color<ansi_color_code::blue>("DFS(preorder):") << std::endl;
     std::cout << print_as_color<ansi_color_code::red>("+ :Current Path") << std::endl;
-    std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Cells") << std::endl;
+    std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Paths") << std::endl;
 
     printMaze();
-    // std::cout << *pn << std::endl;
     if (pn->children.size())
         for (auto& i : pn->children)
             preorder(i, this->finished);
 }
-// void Maze::postorder(Graph::Node* pn)
-// {
-//     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-//     std::cout << "\033[2J\033[1;1H"; //it clears the screen
-//     std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
-//     std::cout << print_as_color<ansi_color_code::blue>("DFS(postorder):") << std::endl;
 
-//     if (pn->children.size())
-//         for (auto& i : pn->children)
-//             postorder(i);
-//     pn->setChecked();
-// graph.lastChecked = pn;
-//     printMaze();
-// }
 void Maze::setNodesNotChecked()
 {
     for (auto& i : graph.Nodes)
         i->setNotChecked();
     graph.lastChecked = nullptr;
+}
+void Maze::mainMenu()
+{
+    std::cout << print_as_color<ansi_color_code::blue>("How to solve?(Enter 1,2,3,4)\n1)BFS\n2)DFS(preorder)\n3)Game mode\n4)Exit.\n");
+    char c {};
+    while (c != '4' && c != '3' && c != '2' && c != '1') {
+        std::cin >> c;
+        switch (c) {
+        case '1':
+            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay(ms):") << std::endl;
+            std::cin >> delay;
+            BFS();
+            setNodesNotChecked();
+            break;
+        case '2':
+            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay(ms):") << std::endl;
+            std::cin >> delay;
+            preorder(graph.root, false);
+            setNodesNotChecked();
+            finished = false;
+            break;
+        case '3':
+            gameMode();
+            break;
+        default:
+            break;
+        }
+    }
 }

@@ -22,16 +22,13 @@ int main(int agrc, char** argv)
     Maze m(w, h);
     m.printMaze();
     std::cout << std::endl;
+    char c { 'm' };
+    while (c != 'e' && c != 'E') {
+        if (c == 'M' || c == 'm')
+            m.mainMenu();
+        std::cout << print_as_color<ansi_color_code::blue>("Please enter \"m\" to return to the main menu or \"e\" to exit.") << std::endl;
+        std::cin >> c;
+    }
 
-    // m.graph.show();
-    m.preorder(m.graph.root, false);
-    m.setNodesNotChecked();
-    m.finished = false;
-    // m.postorder(m.graph.root);
-    // m.setNodesNotChecked();
-    m.BFS();
-    m.setNodesNotChecked();
-    // m.printMaze();
-    // m.gameMode();
     return 0;
 }
