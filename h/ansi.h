@@ -30,4 +30,3 @@ std::string print_as_color(printable const& value)
     sstr << "\033[1;" << static_cast<int>(color) << "m" << value << "\033[0m";
     return sstr.str();
 }
-void load_bar();

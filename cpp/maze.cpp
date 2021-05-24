@@ -130,36 +130,36 @@ void Maze::printMaze()
                 std::cout << print_as_color<ansi_color_code::red>("웃");
                 std::cout << print_as_color<ansi_color_code::blue>("■ ");
             } else if (grid[i].neighbors[Cell::R] == nullptr && graph.isInTree(graph.lastChecked, grid[i].nodeOfCell)) {
-                std::cout << print_as_color<ansi_color_code::red>("+ ");
+                std::cout << print_as_color<ansi_color_code::red>("✔ ");
                 std::cout << print_as_color<ansi_color_code::blue>("■ ");
             } else if (grid[i].neighbors[Cell::R] == nullptr && grid[i].nodeOfCell->isChecked()) {
-                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
                 std::cout << print_as_color<ansi_color_code::blue>("■ ");
             } else if (grid[i].neighbors[Cell::R] == nullptr)
                 std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
             else if (&grid[i] == player_plc && graph.isInTree(graph.lastChecked, player_plc->neighbors[Cell::R]->nodeOfCell)) {
                 std::cout << print_as_color<ansi_color_code::red>("웃");
-                std::cout << print_as_color<ansi_color_code::red>("+ ");
+                std::cout << print_as_color<ansi_color_code::red>("✔ ");
             } else if (&grid[i] == player_plc && player_plc->neighbors[Cell::R]->nodeOfCell->isChecked()) {
                 std::cout << print_as_color<ansi_color_code::red>("웃");
-                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
             } else if (&grid[i] == player_plc) {
                 std::cout << print_as_color<ansi_color_code::red>("웃");
                 std::cout << print_as_color<ansi_color_code::blue>("  ");
             } else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell) && graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::R]->nodeOfCell))
-                std::cout << print_as_color<ansi_color_code::red>("+ + ");
+                std::cout << print_as_color<ansi_color_code::red>("✔ ✔ ");
             else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell) && !graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::R]->nodeOfCell) && !grid[i].neighbors[Cell::R]->nodeOfCell->isChecked())
-                std::cout << print_as_color<ansi_color_code::red>("+   ");
+                std::cout << print_as_color<ansi_color_code::red>("✔   ");
             else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell) && !graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::R]->nodeOfCell)) {
-                std::cout << print_as_color<ansi_color_code::red>("+ ");
-                std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                std::cout << print_as_color<ansi_color_code::red>("✔ ");
+                std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
 
             } else if (grid[i].nodeOfCell->isChecked() && grid[i].neighbors[Cell::R]->nodeOfCell->isChecked())
-                std::cout << print_as_color<ansi_color_code::yellow>("+ + ");
+                std::cout << print_as_color<ansi_color_code::yellow>("✘ ✘ ");
             else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell))
-                std::cout << print_as_color<ansi_color_code::red>("+   ");
+                std::cout << print_as_color<ansi_color_code::red>("✔   ");
             else if (grid[i].nodeOfCell->isChecked())
-                std::cout << print_as_color<ansi_color_code::yellow>("+   ");
+                std::cout << print_as_color<ansi_color_code::yellow>("✘   ");
             else
                 std::cout << "    ";
             if (y > 0)
@@ -176,10 +176,10 @@ void Maze::printMaze()
                 if (grid[i].neighbors[Cell::D] == nullptr)
                     std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
                 else if (graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::D]->nodeOfCell) && graph.isInTree(graph.lastChecked, grid[i].nodeOfCell)) {
-                    std::cout << print_as_color<ansi_color_code::red>("+ ");
+                    std::cout << print_as_color<ansi_color_code::red>("✔ ");
                     std::cout << print_as_color<ansi_color_code::blue>("■ ");
                 } else if (grid[i].neighbors[Cell::D]->nodeOfCell->isChecked() && grid[i].nodeOfCell->isChecked()) {
-                    std::cout << print_as_color<ansi_color_code::yellow>("+ ");
+                    std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
                     std::cout << print_as_color<ansi_color_code::blue>("■ ");
                 } else
                     std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
@@ -233,7 +233,7 @@ void Maze::gameMode()
         if (player_plc == goal_plc) {
             std::cout << "\033[2J\033[1;1H"; //it clears the screen
             std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
-            std::cout << print_as_color<ansi_color_code::blue>("Congratulations, You won the hardest game I've ever code! ") << std::endl;
+            std::cout << print_as_color<ansi_color_code::blue>("Congratulations!, You won the hardest game I've ever code ツ ") << std::endl;
             player_plc = &grid[0];
             break;
         }
@@ -289,8 +289,8 @@ void Maze::BFS()
                 std::cout << "\033[2J\033[1;1H"; //it clears the screen
                 std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
                 std::cout << print_as_color<ansi_color_code::blue>("BFS:") << std::endl;
-                std::cout << print_as_color<ansi_color_code::red>("+ :Current Path") << std::endl;
-                std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Paths") << std::endl;
+                std::cout << print_as_color<ansi_color_code::red>("✔ :Current Path") << std::endl;
+                std::cout << print_as_color<ansi_color_code::yellow>("✘ :Checked Paths") << std::endl;
                 printMaze();
                 if (j == goal_plc->nodeOfCell) {
                     n = graph.N;
@@ -314,13 +314,16 @@ void Maze::preorder(Graph::Node* pn, bool finished)
     std::cout << "\033[2J\033[1;1H"; //it clears the screen
     std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
     std::cout << print_as_color<ansi_color_code::blue>("DFS(preorder):") << std::endl;
-    std::cout << print_as_color<ansi_color_code::red>("+ :Current Path") << std::endl;
-    std::cout << print_as_color<ansi_color_code::yellow>("+ :Checked Paths") << std::endl;
+    std::cout << print_as_color<ansi_color_code::red>("✔ :Current Path") << std::endl;
+    std::cout << print_as_color<ansi_color_code::yellow>("✘ :Checked Paths") << std::endl;
     printMaze();
     if (pn->children.size()) {
+        //reverse children for more optimom search
         std::reverse(pn->children.begin(), pn->children.end());
         for (auto& i : pn->children)
             preorder(i, this->finished);
+        //back to the first state
+        std::reverse(pn->children.begin(), pn->children.end());
     }
 }
 
