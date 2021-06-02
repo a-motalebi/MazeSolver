@@ -1,10 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <compare>
 #include <initializer_list>
 #include <iostream>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -24,8 +22,6 @@ public:
         bool isChecked() { return checked; };
         size_t get_depth() const { return depth; };
         void set_depth(size_t count) { depth = count; };
-        std::partial_ordering operator<=>(const Node& n) const { return value <=> n.value; };
-        bool operator==(const Node& n) const { return value == n.value; };
 
     private:
         size_t depth {};

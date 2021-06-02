@@ -1,11 +1,7 @@
 #include "ansi.h"
 #include "cell.h"
 #include "maze.h"
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
-#include <vector>
 
 int main(int agrc, char** argv)
 {
@@ -23,6 +19,10 @@ int main(int agrc, char** argv)
         std::cin >> w;
         std::cout << print_as_color<ansi_color_code::blue>("height:");
         std::cin >> h;
+        if (w * h < 2) {
+            c = 'n';
+            continue;
+        }
         Maze m(w, h);
         m.printMaze();
         std::cout << std::endl;

@@ -80,14 +80,10 @@ void Maze::walk()
                         std::random_shuffle(nofn.begin(), nofn.end());
                         curCell = nofn.back();
                         std::remove(visCells.begin(), visCells.end(), curCell->getIndex());
-                        // VisCells--;
                         walk();
                     }
                 }
             }
-        } else {
-            // if all Cells have been visited then the maze is complete - print it!
-            //printMaze();
         }
     }
 }
@@ -116,14 +112,14 @@ void Maze::printMaze()
     size_t i {};
     for (size_t y {}; y <= h; y++) {
         for (size_t x {}; x < w; x++) {
+            if (x == 0)
+                std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
             if (x == w - 1 && y == h) {
                 std::cout << print_as_color<ansi_color_code::green>("유");
                 std::cout << print_as_color<ansi_color_code::blue>("■ ");
                 i++;
                 break;
             }
-            if (x == 0)
-                std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
             if (y == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
             else if (grid[i].neighbors[Cell::R] == nullptr && &grid[i] == player_plc) {
@@ -153,7 +149,6 @@ void Maze::printMaze()
             else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell) && !graph.isInTree(graph.lastChecked, grid[i].neighbors[Cell::R]->nodeOfCell)) {
                 std::cout << print_as_color<ansi_color_code::red>("✔ ");
                 std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
-
             } else if (grid[i].nodeOfCell->isChecked() && grid[i].neighbors[Cell::R]->nodeOfCell->isChecked())
                 std::cout << print_as_color<ansi_color_code::yellow>("✘ ✘ ");
             else if (graph.isInTree(graph.lastChecked, grid[i].nodeOfCell))
@@ -233,7 +228,7 @@ void Maze::gameMode()
         if (player_plc == goal_plc) {
             std::cout << "\033[2J\033[1;1H"; //it clears the screen
             std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
-            std::cout << print_as_color<ansi_color_code::blue>("Congratulations!, You won the hardest game I've ever code ツ ") << std::endl;
+            std::cout << print_as_color<ansi_color_code::blue>("Congratulations!, You won the hardest game I've ever code ツ. ") << std::endl;
             player_plc = &grid[0];
             break;
         }
@@ -254,8 +249,10 @@ void Maze::setGraph()
 void Maze::insert(size_t n)
 {
     for (auto& j : graph.Nodes)
-        if (j->value == n)
+        if (j->value == n) {
             curNode = j;
+            break;
+        }
     for (auto& i : grid[n].neighbors) {
         if (i) {
             if (std::binary_search(notInserted.begin(), notInserted.end(), i->getIndex())) {
