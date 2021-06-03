@@ -26,8 +26,12 @@ void Maze::generateGrid()
             i++;
         }
     }
-    player_plc = &grid[0];
-    goal_plc = &grid[totalCells - 1];
+    std::cout << print_as_color<ansi_color_code::blue>("Please enter player position(0-") << print_as_color<ansi_color_code::blue>(w * h - 1) << print_as_color<ansi_color_code::blue>("):") << std::endl;
+    std::cin >> i;
+    player_plc = &grid[i];
+    std::cout << print_as_color<ansi_color_code::blue>("Please enter goal position:(0-") << print_as_color<ansi_color_code::blue>(w * h - 1) << print_as_color<ansi_color_code::blue>("):") << std::endl;
+    std::cin >> i;
+    goal_plc = &grid[i];
 }
 // selects random starting point
 void Maze::randStart()
@@ -114,11 +118,17 @@ void Maze::printMaze()
         for (size_t x {}; x < w; x++) {
             if (x == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
-            if (x == w - 1 && y == h) {
+            if (x == goal_plc->getX() && y == goal_plc->getY() + 1 && grid[i].neighbors[Cell::R] == nullptr) {
                 std::cout << print_as_color<ansi_color_code::green>("유");
                 std::cout << print_as_color<ansi_color_code::blue>("■ ");
                 i++;
-                break;
+                continue;
+            }
+            if (x == goal_plc->getX() && y == goal_plc->getY() + 1) {
+                std::cout << print_as_color<ansi_color_code::green>("유");
+                std::cout << print_as_color<ansi_color_code::blue>("  ");
+                i++;
+                continue;
             }
             if (y == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
@@ -188,6 +198,7 @@ void Maze::printMaze()
 void Maze::gameMode()
 {
     char c {};
+    Cell* temp { player_plc };
     //gaming mode while
     while (c != 'e' && c != 'E') {
         std::cout << "\033[2J\033[1;1H"; //it clears the screen
@@ -219,7 +230,7 @@ void Maze::gameMode()
             break;
         case 'e':
         case 'E':
-            player_plc = &grid[0];
+            player_plc = temp;
 
             break;
         default:
@@ -229,18 +240,18 @@ void Maze::gameMode()
             std::cout << "\033[2J\033[1;1H"; //it clears the screen
             std::cout << print_as_color<ansi_color_code::magenta>("███╗░░░███╗░█████╗░███████╗███████╗  ░██████╗░█████╗░██╗░░░░░██╗░░░██╗███████╗██████╗░\n████╗░████║██╔══██╗╚════██║██╔════╝  ██╔════╝██╔══██╗██║░░░░░██║░░░██║██╔════╝██╔══██╗\n██╔████╔██║███████║░░███╔═╝█████╗░░  ╚█████╗░██║░░██║██║░░░░░╚██╗░██╔╝█████╗░░██████╔╝\n██║╚██╔╝██║██╔══██║██╔══╝░░██╔══╝░░  ░╚═══██╗██║░░██║██║░░░░░░╚████╔╝░██╔══╝░░██╔══██╗\n██║░╚═╝░██║██║░░██║███████╗███████╗  ██████╔╝╚█████╔╝███████╗░░╚██╔╝░░███████╗██║░░██║\n╚═╝░░░░░╚═╝╚═╝░░╚═╝╚══════╝╚══════╝  ╚═════╝░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n") << std::endl;
             std::cout << print_as_color<ansi_color_code::blue>("Congratulations!, You won the hardest game I've ever code ツ. ") << std::endl;
-            player_plc = &grid[0];
+            player_plc = temp;
             break;
         }
     }
 }
 void Maze::setGraph()
 {
-    graph.root = new Graph::Node(0);
+    graph.root = new Graph::Node(player_plc->getIndex());
     graph.Nodes.push_back(graph.root);
     graph.N++;
     curNode = graph.root;
-    insert(0);
+    insert(player_plc->getIndex());
     for (auto& i : graph.Nodes) {
         grid[i->value].setNode(i);
     }
@@ -261,6 +272,7 @@ void Maze::insert(size_t n)
             }
         }
     }
+    //remove n from notInserted
     notInserted.erase(std::remove(notInserted.begin(), notInserted.end(), n), notInserted.end());
     size_t flag {};
     for (auto& j : graph.Nodes) {
@@ -338,13 +350,13 @@ void Maze::mainMenu()
         std::cin >> c;
         switch (c) {
         case '1':
-            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay(ms):") << std::endl;
+            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay between steps(ms):") << std::endl;
             std::cin >> delay;
             BFS();
             setNodesNotChecked();
             break;
         case '2':
-            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay(ms):") << std::endl;
+            std::cout << print_as_color<ansi_color_code::blue>("Please enter delay between steps(ms):") << std::endl;
             std::cin >> delay;
             preorder(graph.root, false);
             setNodesNotChecked();
