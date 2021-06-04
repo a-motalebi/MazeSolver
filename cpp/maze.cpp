@@ -118,17 +118,31 @@ void Maze::printMaze()
         for (size_t x {}; x < w; x++) {
             if (x == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("  ■ ");
-            if (x == goal_plc->getX() && y == goal_plc->getY() + 1 && grid[i].neighbors[Cell::R] == nullptr) {
-                std::cout << print_as_color<ansi_color_code::green>("유");
-                std::cout << print_as_color<ansi_color_code::blue>("■ ");
-                i++;
-                continue;
-            }
-            if (x == goal_plc->getX() && y == goal_plc->getY() + 1) {
-                std::cout << print_as_color<ansi_color_code::green>("유");
-                std::cout << print_as_color<ansi_color_code::blue>("  ");
-                i++;
-                continue;
+            if (goal_plc) {
+                if (x == goal_plc->getX() && y == goal_plc->getY() + 1 && grid[i].neighbors[Cell::R] == nullptr) {
+                    std::cout << print_as_color<ansi_color_code::green>("유");
+                    std::cout << print_as_color<ansi_color_code::blue>("■ ");
+                    i++;
+                    continue;
+                }
+                if (x == goal_plc->getX() && y == goal_plc->getY() + 1 && graph.isInTree(grid[i].nodeOfCell, grid[i].neighbors[Cell::R]->nodeOfCell) && graph.isInTree(graph.lastChecked, grid[i].nodeOfCell)) {
+                    std::cout << print_as_color<ansi_color_code::green>("유");
+                    std::cout << print_as_color<ansi_color_code::red>("✔ ");
+                    i++;
+                    continue;
+                }
+                if (x == goal_plc->getX() && y == goal_plc->getY() + 1 && grid[i].nodeOfCell->isChecked() && grid[i].neighbors[Cell::R]->nodeOfCell->isChecked()) {
+                    std::cout << print_as_color<ansi_color_code::green>("유");
+                    std::cout << print_as_color<ansi_color_code::yellow>("✘ ");
+                    i++;
+                    continue;
+                }
+                if (x == goal_plc->getX() && y == goal_plc->getY() + 1) {
+                    std::cout << print_as_color<ansi_color_code::green>("유");
+                    std::cout << print_as_color<ansi_color_code::blue>("  ");
+                    i++;
+                    continue;
+                }
             }
             if (y == 0)
                 std::cout << print_as_color<ansi_color_code::blue>("■ ■ ");
@@ -303,6 +317,7 @@ void Maze::BFS()
                 printMaze();
                 if (j == goal_plc->nodeOfCell) {
                     n = graph.N;
+                    graph.lastChecked = nullptr;
                     break;
                 }
                 n++;
