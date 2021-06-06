@@ -56,35 +56,28 @@ void Maze::walk()
     } else {
         // Enter Hunting Mode
         // Find the first unvisited Cell that has visited neighbor, make it the current Cell, & start a new path from it
-        if (VisCells < totalCells && !visCells.empty()) {
+        if (VisCells < totalCells) {
             for (auto& i : grid) {
                 if (!i.isVisited()) {
                     std::vector<Cell*> nofn;
                     if (i.getIndex() != w * h - 1)
-                        if (&grid[i.getIndex() + 1]) {
-                            if (grid[i.getIndex() + 1].isVisited())
-                                nofn.push_back(&grid[i.getIndex() + 1]);
-                        }
+                        if (grid[i.getIndex() + 1].isVisited())
+                            nofn.push_back(&grid[i.getIndex() + 1]);
                     if (i.getIndex())
-                        if (&grid[i.getIndex() - 1]) {
-                            if (grid[i.getIndex() - 1].isVisited())
-                                nofn.push_back(&grid[i.getIndex() - 1]);
-                        }
+                        if (grid[i.getIndex() - 1].isVisited())
+                            nofn.push_back(&grid[i.getIndex() - 1]);
                     if (i.getIndex() < w * h - w)
-                        if (&grid[i.getIndex() + w]) {
-                            if (grid[i.getIndex() + w].isVisited())
-                                nofn.push_back(&grid[i.getIndex() + w]);
-                        }
+                        if (grid[i.getIndex() + w].isVisited())
+                            nofn.push_back(&grid[i.getIndex() + w]);
                     if (i.getIndex() >= w)
-                        if (&grid[i.getIndex() - w]) {
-                            if (grid[i.getIndex() - w].isVisited())
-                                nofn.push_back(&grid[i.getIndex() - w]);
-                        }
+                        if (grid[i.getIndex() - w].isVisited())
+                            nofn.push_back(&grid[i.getIndex() - w]);
                     if (nofn.size()) {
                         std::random_shuffle(nofn.begin(), nofn.end());
                         curCell = nofn.back();
                         std::remove(visCells.begin(), visCells.end(), curCell->getIndex());
                         walk();
+                        break;
                     }
                 }
             }
@@ -286,17 +279,7 @@ void Maze::insert(size_t n)
             }
         }
     }
-    //remove n from notInserted
     notInserted.erase(std::remove(notInserted.begin(), notInserted.end(), n), notInserted.end());
-    size_t flag {};
-    for (auto& j : graph.Nodes) {
-        if (j->value == n) {
-            curNode = j;
-            flag = 1;
-        }
-    }
-    if (!flag)
-        return;
     for (auto& i : curNode->children)
         insert(i->value);
 }
