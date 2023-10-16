@@ -10,16 +10,16 @@ DFS algorithms to solve the maze by the agent.
 
 # Start and main menu
 
-![dash](https://github.com/a-motalebi/stock-monitoring/blob/master/1.jpg?raw=true)
+![dash](https://github.com/a-motalebi/MazeSolver/blob/master/1.jpg?raw=true)
 
 # BFS
 
-![dash](https://github.com/a-motalebi/stock-monitoring/blob/master/2.jpg?raw=true)
+![dash](https://github.com/a-motalebi/MazeSolver/blob/master/2.jpg?raw=true)
 
 # DFS
 
-![dash](https://github.com/a-motalebi/stock-monitoring/blob/master/3.jpg?raw=true)
+![dash](https://github.com/a-motalebi/MazeSolver/blob/master/3.jpg?raw=true)
 
 # Game mode
 
-![dash](https://github.com/a-motalebi/stock-monitoring/blob/master/4.jpg?raw=true)
+![dash](https://github.com/a-motalebi/MazeSolver/blob/master/4.jpg?raw=true)
